@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer"   />
+    <link href="style.css" rel="stylesheet" />
+    <title>kalkulator sederhana</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <input id="display" disabled />
+            <div class="grid">
+                <button class="cal number" onclick="enterNumbers(7)">7</button>
+                <button class="cal number" onclick="enterNumbers(8)">8</button>
+                <button class="cal number" onclick="enterNumbers(9)">9</button>
+                <button class="cal operator" onclick="enterOperator('/')">/</button>
+                <button class="cal number" onclick="enterNumbers(4)">4</button>
+                <button class="cal number" onclick="enterNumbers(5)">5</button>
+                <button class="cal number" onclick="enterNumbers(6)">6</button>
+                <button class="cal operator" onclick="enterOperator('*')">x</button>
+                <button class="cal number" onclick="enterNumbers(1)">1</button>
+                <button class="cal number" onclick="enterNumbers(2)">2</button>
+                <button class="cal number" onclick="enterNumbers(3)">3</button>
+                <button class="cal operator" onclick="enterOperator('-')">-</button>
+                <button class="cal number" onclick="enterNumbers(0)">0</button>
+                <button class="cal number" onclick="enterNumbers('.')">,</button>
+                <button class="cal operator" onclick="results()">=</button>
+                <button class="cal operator" onclick="enterOperator('+')">+</button>
+            </div>
+            <button class="reset" onclick="reset()">Reset</button>
+            
+            <!-- Tambahkan elemen informasi password di sini -->
+            <div class="password-info">
+                <p><strong>Informasi Password:</strong></p>
+                <p>Masukkan <code>5 + 5</code> untuk mengakses film</p>
+                <p class="hint">Hint: Hasil dari 5 + 5 adalah 10</p>
+            </div>
+        </div>
+    </div>
+    <div id="loaders"></div>
+
+<div id="containerBerylMovie">
+     <header>
+      <form id="searchForm">
+        <h3 class="title">Beryl Movie</h3>
+        <input type="text" placeholder="Cari Film" class="pencarian" id="search"/>
+      </form>
+    </header>
+
+    <nav class="navbar">
+      <ul>
+        <li id="home"><a href="#">Home</a></li>
+
+        <li class="dropdown">
+          <button class="dropbtn">Genre <span class="arrow">▼</span></button>
+          <div class="dropdown-content">
+            <a href="#" data-genre="28">Action</a>
+            <a href="#" data-genre="12">Adventure</a>
+            <a href="#" data-genre="35">Comedy</a>
+            <a href="#" data-genre="18">Drama</a>
+            <a href="#" data-genre="27">Horror</a>
+          </div>
+        </li>
+
+        <li class="dropdown">
+          <button class="dropbtn">Tahun <span class="arrow">▼</span></button>
+          <div class="dropdown-content">
+            <a href="#" data-year="2025">2025</a>
+            <a href="#" data-year="2024">2024</a>
+            <a href="#" data-year="2023">2023</a>
+            <a href="#" data-year="2022">2022</a>
+            <a href="#" data-year="2021">2021</a>
+          </div>
+        </li>
+
+        <li class="dropdown">
+          <button class="dropbtn">Negara <span class="arrow">▼</span></button>
+          <div class="dropdown-content">
+            <a href="#" data-country="ID">Indonesia</a>
+            <a href="#" data-country="GB">England</a>
+            <a href="#" data-country="CN">China</a>
+            <a href="#" data-country="JP">Jepang</a>
+            <a href="#" data-country="KR">Korea</a>
+          </div>
+        </li>
+
+        <li id="bestRating">Best Rating</li>
+        <li id="dmca">DMCA</li>
+        <li id="faq">FAQ</li>
+        <li id="ads">Iklan</li>
+      </ul>
+    </nav>
+
+    <div id="moviesElement"></div>
+
+    <div class="pagination">
+      <div id="prev">Prev</div>
+      <div id="currentPage"></div>
+      <div id="next">Next</div>
+    </div>
+
+    <!-- Modal untuk memutar film -->
+    <div id="movieModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="moviePlayer">
+                <div class="video-placeholder">
+                    <i class="fas fa-film"></i>
+                    <p>Trailer tidak tersedia</p>
+                </div>
+            </div>
+            <div id="movieDetails">
+                <h2 id="modalMovieTitle"></h2>
+                <div class="movie-info">
+                    <span class="rating" id="modalRating"></span>
+                    <span class="popularity" id="modalPopularity"></span>
+                </div>
+                <p id="modalOverview"></p>
+                <div class="movie-meta">
+                    <p><strong>Release Date:</strong> <span id="modalReleaseDate"></span></p>
+                    <p><strong>Original Language:</strong> <span id="modalLanguage"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal untuk Best Rating -->
+    <div id="bestRatingModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>🏆 Film Rating Tertinggi</h2>
+            <div class="rating-content">
+                <div class="top-movies" id="topMovies">
+                    <!-- Film rating tinggi akan dimuat di sini -->
+                </div>
+                <div class="rating-info">
+                    <h3>📊 Sistem Rating</h3>
+                    <p>Rating film di Beryl Movie berdasarkan:</p>
+                    <ul>
+                        <li>⭐ 9.0+ - Masterpiece</li>
+                        <li>⭐ 8.0+ - Excellent</li>
+                        <li>⭐ 7.0+ - Very Good</li>
+                        <li>⭐ 6.0+ - Good</li>
+                        <li>⭐ 5.0+ - Average</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal untuk DMCA -->
+    <div id="dmcaModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>📄 DMCA Policy</h2>
+            <div class="dmca-content">
+                <div class="dmca-section">
+                    <h3>🔒 Kebijakan Hak Cipta</h3>
+                    <p>Beryl Movie menghormati hak kekayaan intelektual orang lain dan mengharapkan penggunanya melakukan hal yang sama.</p>
+                </div>
+                
+                <div class="dmca-section">
+                    <h3>📝 Prosedur Pengaduan DMCA</h3>
+                    <p>Jika Anda percaya bahwa konten Anda telah disalin dengan cara yang merupakan pelanggaran hak cipta, silakan kirim pemberitahuan yang berisi:</p>
+                    <ul>
+                        <li>Tanda tangan pemilik hak cipta atau wakilnya</li>
+                        <li>Identifikasi karya yang diklaim dilanggar</li>
+                        <li>Informasi kontak Anda</li>
+                        <li>Pernyataan bahwa penggunaan tidak diizinkan</li>
+                    </ul>
+                </div>
+
+                <div class="dmca-section">
+                    <h3>📧 Kontak DMCA</h3>
+                    <p>Email: dmca@berylmovie.com</p>
+                    <p>Response time: 2-3 hari kerja</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal untuk FAQ -->
+    <div id="faqModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>❓ Frequently Asked Questions</h2>
+            <div class="faq-content">
+                <div class="faq-item">
+                    <h3>🎬 Bagaimana cara menonton film?</h3>
+                    <p>Klik pada poster film yang ingin ditonton, lalu trailer akan otomatis diputar di modal.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>🔍 Bagaimana cara mencari film?</h3>
+                    <p>Gunakan fitur search di header atau filter berdasarkan genre, tahun, dan negara.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>💾 Apakah film bisa diunduh?</h3>
+                    <p>Beryl Movie hanya menyediakan streaming trailer, tidak untuk mengunduh film lengkap.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>📱 Apakah website ini mobile-friendly?</h3>
+                    <p>Ya, Beryl Movie didesain responsif dan dapat diakses dari berbagai perangkat.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>🆓 Apakah layanan ini gratis?</h3>
+                    <p>Ya, Beryl Movie sepenuhnya gratis tanpa biaya berlangganan.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal untuk Iklan -->
+    <div id="adsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>📢 Kerjasama & Iklan</h2>
+            <div class="ads-content">
+                <div class="ads-section">
+                    <h3>💰 Paket Iklan</h3>
+                    <div class="pricing">
+                        <div class="plan">
+                            <h4>Basic</h4>
+                            <p class="price">$50/bulan</p>
+                            <ul>
+                                <li>Banner 300x250</li>
+                                <li>10.000 impression/hari</li>
+                                <li>Priority support</li>
+                            </ul>
+                        </div>
+                        <div class="plan">
+                            <h4>Premium</h4>
+                            <p class="price">$100/bulan</p>
+                            <ul>
+                                <li>Banner 728x90</li>
+                                <li>25.000 impression/hari</li>
+                                <li>Featured placement</li>
+                            </ul>
+                        </div>
+                        <div class="plan">
+                            <h4>Enterprise</h4>
+                            <p class="price">$200/bulan</p>
+                            <ul>
+                                <li>Video ads</li>
+                                <li>50.000 impression/hari</li>
+                                <li>Custom placement</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ads-section">
+                    <h3>📈 Statistik Pengunjung</h3>
+                    <ul>
+                        <li>🟢 50,000+ pengunjung bulanan</li>
+                        <li>🎯 80% traffic dari Indonesia</li>
+                        <li>📱 60% akses mobile</li>
+                        <li>⏱️ Average session: 15 menit</li>
+                    </ul>
+                </div>
+
+                <div class="ads-section">
+                    <h3>📞 Kontak Kerjasama</h3>
+                    <p>Email: ads@berylmovie.com</p>
+                    <p>WhatsApp: +62 812-3456-7890</p>
+                    <p>Response time: 24 jam</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+       
+</body>
+<script src="script.js"></script> 
+
+</html>
